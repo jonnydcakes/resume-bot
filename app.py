@@ -24,7 +24,14 @@ hide_streamlit_style = """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 st.title("💬 Interactive Professional Profile")
-st.write("Ask me anything about this candidate's experience, leadership philosophy, or technical skills.")
+st.write("Welcome to my interactive professional profile. This is an AI assistant trained exclusively on my resume, project portfolio, and leadership philosophy for the Sr. Director of IT role.")
+st.markdown("""
+You can ask it any question, or try one of these suggestions:
+- 'What is this candidate's leadership philosophy?'
+- 'Summarize his experience with IT financial management.'
+- 'What is his strategy for AI adoption?'
+- 'Give me a detailed example of a project he has executed.'
+""")
 
 # --- 1. Load Your Documents ---
 # Cache this so it only runs once per container start/reload, not every interaction
@@ -69,7 +76,7 @@ CONTEXT:
 
 # Use the stable model name and set temperature to 0.0 for maximum factual adherence
 model = genai.GenerativeModel(
-    model_name="gemini-2.5-flash",
+    model_name="gemini-1.5-flash-latest",
     system_instruction=SYSTEM_PROMPT,
     generation_config=genai.GenerationConfig(temperature=0.0)
 )

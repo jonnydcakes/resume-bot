@@ -64,7 +64,7 @@ CONTEXT:
 
 # Using 1.5 Flash because it's fast, cheap (free tier available), and has a 1M token context window
 model = genai.GenerativeModel(
-    model_name="gemini-1.5-flash",
+    model_name="gemini-1.5-flash-latest",
     system_instruction=SYSTEM_PROMPT
 )
 

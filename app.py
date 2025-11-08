@@ -16,7 +16,7 @@ if not CANDIDATE_NAME:
     CANDIDATE_NAME = "this canidate"
 FORMAL_NAME = os.getenv("FORMAL_NAME")
 if not FORMAL_NAME:
-    FORMAL_NAME = "This canidate's"  # e.g., "Jonathon Huff"
+    FORMAL_NAME = "This canidate"
 
 st.set_page_config(page_title=f"{FORMAL_NAME}'s Professional Profile", page_icon="👨‍💼")
 

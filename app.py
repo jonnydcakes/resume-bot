@@ -64,8 +64,12 @@ CONTEXT:
 
 # Using 1.5 Flash because it's fast, cheap (free tier available), and has a 1M token context window
 model = genai.GenerativeModel(
-    model_name="gemini-1.5-flash-latest",
-    system_instruction=SYSTEM_PROMPT
+    model_name="gemini-2.5-flash",
+    system_instruction=SYSTEM_PROMPT,
+    # Add this configuration specifically for strictly factual bots
+    generation_config=genai.GenerationConfig(
+        temperature=0.0
+    )
 )
 
 # --- 3. Chat UI ---

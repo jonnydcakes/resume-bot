@@ -11,7 +11,14 @@ if not api_key:
 
 genai.configure(api_key=api_key)
 
-st.set_page_config(page_title="Professional Profile", page_icon="👔")
+CANDIDATE_NAME = os.getenv("CANDIDATE_NAME")
+if not CANDIDATE_NAME:
+    CANDIDATE_NAME = "this canidate"
+FORMAL_NAME = os.getenv("FORMAL_NAME")
+if not FORMAL_NAME:
+    FORMAL_NAME = "This canidate's"  # e.g., "Jonathon Huff"
+
+st.set_page_config(page_title=f"{FORMAL_NAME}'s Professional Profile", page_icon="👨‍💼")
 
 # Hide standard Streamlit formatting (optional polish)
 hide_streamlit_style = """
@@ -23,11 +30,11 @@ hide_streamlit_style = """
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-st.title("💬 Interactive Professional Profile")
+st.title(f"💬 {FORMAL_NAME}'s Interactive Professional Profile")
 st.write("Welcome to my interactive professional profile. This is an AI assistant trained exclusively on my resume, project portfolio, and leadership philosophy for the Sr. Director of IT role.")
-st.markdown("""
+st.markdown(f"""
 You can ask it any question, or try one of these suggestions:
-- 'What is this candidate's leadership philosophy?'
+- 'What is {CANDIDATE_NAME}'s leadership philosophy?'
 - 'Summarize his experience with IT financial management.'
 - 'What is his strategy for AI adoption?'
 - 'Give me a detailed example of a project he has executed.'
@@ -58,10 +65,9 @@ def load_context():
 FULL_CONTEXT = load_context()
 
 # --- 2. Initialize Gemini Model ---
-CANDIDATE_NAME = "Jonny" # e.g., "Jonny"
 
 SYSTEM_PROMPT = f"""
-You are a professional AI assistant representing {CANDIDATE_NAME} for a Sr. IT Director role.
+You are a professional AI assistant representing {FORMAL_NAME} for a Sr. IT Director role.
 Your goal is to professionally and engagingly answer questions about {CANDIDATE_NAME}'s experience based ONLY on the context provided below.
 
 ### GUIDELINES:
@@ -76,7 +82,7 @@ CONTEXT:
 
 # Use the stable model name and set temperature to 0.0 for maximum factual adherence
 model = genai.GenerativeModel(
-    model_name="gemini-1.5-flash-latest",
+    model_name="gemini-2.5-flash",
     system_instruction=SYSTEM_PROMPT,
     generation_config=genai.GenerationConfig(temperature=0.0)
 )

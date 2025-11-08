@@ -83,7 +83,7 @@ CONTEXT:
 
 # Use the stable model name and set temperature to 0.0 for maximum factual adherence
 model = genai.GenerativeModel(
-    model_name="gemini-2.5-flash",
+    model_name="gemini-2.5-flash", # DO NOT LET THIS CHANGE TO ANYTHING LOWER THAN 2.5
     system_instruction=SYSTEM_PROMPT,
     generation_config=genai.GenerationConfig(temperature=0.0)
 )

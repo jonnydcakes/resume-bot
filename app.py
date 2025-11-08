@@ -34,10 +34,11 @@ st.title(f"💬 {FORMAL_NAME}'s Interactive Professional Profile")
 st.write("Welcome to my interactive professional profile. This is an AI assistant trained exclusively on my resume, project portfolio, and leadership philosophy for the Sr. Director of IT role.")
 st.markdown(f"""
 You can ask it any question, or try one of these suggestions:
-- 'What is {CANDIDATE_NAME}'s leadership philosophy?'
-- 'Summarize his experience with IT financial management.'
-- 'What is his strategy for AI adoption?'
-- 'Give me a detailed example of a project he has executed.'
+- What is {CANDIDATE_NAME}'s leadership philosophy?
+- Summarize his experience with IT financial management.
+- What is his strategy for AI adoption?
+- Give me a detailed example of a project he has executed.
+- What are the top three reasons to hire {CANDIDATE_NAME} for a Sr. IT Director role?
 """)
 
 # --- 1. Load Your Documents ---

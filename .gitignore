@@ -1,3 +1,4 @@
 *.pdf
 test.py
 *.env
+restart.sh

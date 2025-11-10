@@ -2,3 +2,5 @@
 test.py
 *.env
 restart.sh
+data/
+*.jpg

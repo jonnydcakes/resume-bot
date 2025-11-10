@@ -20,6 +20,21 @@ if not FORMAL_NAME:
 
 st.set_page_config(page_title=f"{FORMAL_NAME}'s Professional Profile", page_icon="👨‍💼")
 
+# --- Custom Metatags for Social Sharing ---
+# You can host your image on a site like GitHub, Imgur, or a personal website.
+# Replace this with the direct URL to your image.
+IMAGE_URL = "data/jhuff.jpg" 
+
+meta_tags = f"""
+    <meta property="og:title" content="{FORMAL_NAME}'s Professional Profile">
+    <meta property="og:description" content="An interactive AI assistant trained on my professional background for the Sr. Director of IT role at Moody Bible Institute. Ask it anything about my experience!">
+    <meta property="og:image" content="{IMAGE_URL}">
+    <meta property="og:url" content="https://mbi.huff.fyi"> 
+    <meta name="twitter:card" content="summary_large_image">
+"""
+st.markdown(meta_tags, unsafe_allow_html=True)
+
+
 # Hide standard Streamlit formatting (optional polish)
 hide_streamlit_style = """
             <style>

@@ -17,19 +17,36 @@ if not CANDIDATE_NAME:
 FORMAL_NAME = os.getenv("FORMAL_NAME")
 if not FORMAL_NAME:
     FORMAL_NAME = "This canidate"
+ROLE = os.getenv("ROLE")
+if not ROLE:
+    ROLE = "role"
+SYSTEM_PROMPT = os.getenv("SYSTEM_PROMPT")
+if not SYSTEM_PROMPT:
+    SYSTEM_PROMPT = f"""
+You are a professional AI assistant representing {FORMAL_NAME} for a {ROLE} role.
+Your goal is to professionally and engagingly answer questions about {CANDIDATE_NAME}'s experience based ONLY on the context provided below.
+
+### GUIDELINES:
+1.  **STRICT FACTS:** You must ONLY use the provided CONTEXT for factual information. Do not make up jobs, skills, or dates not present in the text.
+2.  **POSITIVE REPRESENTATION:** You are representing the candidate. Tone should be professional, confident, and mission-minded.
+3.  **AVOID REPETITION:** If asked about a general topic (like "leadership"), try to use different examples or varied details from the CONTEXT rather than repeatedly citing the same single major project. Look for smaller, relevant details in the text to provide depth.
+4.  **HANDLING MISSING INFO:** If asked a factual question NOT in the context, do not just say "I do not know." Instead, say something like: "I don't have that specific detail in my current records. Could you rephrase the question, or perhaps ask about my experience with [insert a relevant major skill from context, e.g., 'Cloud Migration' or 'Team Leadership']?"
+5.  **HANDLING SUBJECTIVE QUESTIONS:** If asked subjective questions (e.g., "Should I hire him?", "Is he good?"), do NOT look for those literal words in the text. Instead, respond with confidence based on the facts. Example: "While I cannot make that decision for you, {CANDIDATE_NAME}'s experience in [Skill A] and [Skill B] aligns strongly with {ROLE} responsibilities. Would you like to hear more about his leadership philosophy?"
+"""
 
 st.set_page_config(page_title=f"{FORMAL_NAME}'s Professional Profile", page_icon="👨‍💼")
 
 # --- Custom Metatags for Social Sharing ---
 # You can host your image on a site like GitHub, Imgur, or a personal website.
 # Replace this with the direct URL to your image.
-IMAGE_URL = "data/jhuff.jpg" 
+IMAGE_URL = os.getenv("IMAGE_URL") # e.g. "data/photo.jpg" if the photo is locally hosted with the context files
+APP_URL = os.getenv("APP_URL")
 
 meta_tags = f"""
     <meta property="og:title" content="{FORMAL_NAME}'s Professional Profile">
-    <meta property="og:description" content="An interactive AI assistant trained on my professional background for the Sr. Director of IT role at Moody Bible Institute. Ask it anything about my experience!">
+    <meta property="og:description" content="An interactive AI assistant trained on my professional background for the {ROLE}. Ask it anything about my experience!">
     <meta property="og:image" content="{IMAGE_URL}">
-    <meta property="og:url" content="https://mbi.huff.fyi"> 
+    <meta property="og:url" content="{APP_URL}"> 
     <meta name="twitter:card" content="summary_large_image">
 """
 st.markdown(meta_tags, unsafe_allow_html=True)
@@ -46,14 +63,14 @@ hide_streamlit_style = """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 st.title(f"💬 {FORMAL_NAME}'s Interactive Professional Profile")
-st.write("Welcome to my interactive professional profile. This is an AI assistant trained exclusively on my resume, project portfolio, and leadership philosophy for the Sr. Director of IT role.")
+st.write(f"Welcome to my interactive professional profile. This is an AI assistant trained exclusively on my resume, project portfolio, and leadership philosophy for the {ROLE}.")
 st.markdown(f"""
 You can ask it any question, or try one of these suggestions:
 - What is {CANDIDATE_NAME}'s leadership philosophy?
 - Summarize his experience with IT financial management.
 - What is his strategy for AI adoption?
 - Give me a detailed example of a project he has executed.
-- What are the top three reasons to hire {CANDIDATE_NAME} for a Sr. IT Director role?
+- What are the top three reasons to hire {CANDIDATE_NAME} for the {ROLE}?
 """)
 
 # --- 1. Load Your Documents ---
@@ -82,16 +99,7 @@ FULL_CONTEXT = load_context()
 
 # --- 2. Initialize Gemini Model ---
 
-SYSTEM_PROMPT = f"""
-You are a professional AI assistant representing {FORMAL_NAME} for a Sr. IT Director role.
-Your goal is to professionally and engagingly answer questions about {CANDIDATE_NAME}'s experience based ONLY on the context provided below.
-
-### GUIDELINES:
-1.  **STRICT FACTS:** You must ONLY use the provided CONTEXT for factual information. Do not make up jobs, skills, or dates not present in the text.
-2.  **POSITIVE REPRESENTATION:** You are representing the candidate. Tone should be professional, confident, and mission-minded.
-3.  **AVOID REPETITION:** If asked about a general topic (like "leadership"), try to use different examples or varied details from the CONTEXT rather than repeatedly citing the same single major project. Look for smaller, relevant details in the text to provide depth.
-4.  **HANDLING MISSING INFO:** If asked a factual question NOT in the context, do not just say "I do not know." Instead, say something like: "I don't have that specific detail in my current records. Could you rephrase the question, or perhaps ask about my experience with [insert a relevant major skill from context, e.g., 'Cloud Migration' or 'Team Leadership']?"
-5.  **HANDLING SUBJECTIVE QUESTIONS:** If asked subjective questions (e.g., "Should I hire him?", "Is he good?"), do NOT look for those literal words in the text. Instead, respond with confidence based on the facts. Example: "While I cannot make that decision for you, {CANDIDATE_NAME}'s experience in [Skill A] and [Skill B] aligns strongly with Sr. IT Director responsibilities. Would you like to hear more about his leadership philosophy?"
+SYSTEM_PROMPT = f"""{SYSTEM_PROMPT}
 
 CONTEXT:
 {FULL_CONTEXT}
